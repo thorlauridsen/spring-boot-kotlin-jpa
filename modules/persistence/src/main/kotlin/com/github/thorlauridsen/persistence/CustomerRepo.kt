@@ -1,73 +1,11 @@
 package com.github.thorlauridsen.persistence
 
-import com.github.thorlauridsen.model.Customer
-import com.github.thorlauridsen.model.CustomerInput
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Repository
 import java.util.UUID
+import org.springframework.data.jpa.repository.JpaRepository
 
 /**
- * Exposed customer repository.
- * This repository is responsible for:
- * - Saving customers to the database.
- * - Fetching customers from the database.
+ * Customer repository interface.
+ * This is a JPA repository for the customer entity.
+ * It extends the [JpaRepository] interface which allows us to easily define CRUD methods.
  */
-@Repository
-class CustomerRepo {
-
-    private val logger = LoggerFactory.getLogger(this::class.java)
-
-    /**
-     * Save a customer to the database.
-     * @param customer [CustomerInput] to save.
-     * @throws IllegalStateException if customer not found in database after saving.
-     * @return [Customer] retrieved from database.
-     */
-    fun save(customer: CustomerInput): Customer {
-        return transaction {
-            logger.info("Saving customer $customer to database...")
-            val id = CustomerTable.insertAndGetId {
-                it[mail] = customer.mail
-            }
-            logger.info("Saved customer with id $id in database")
-
-            find(id.value) ?: error("Could not save customer with mail: $customer")
-        }
-    }
-
-    /**
-     * Get a customer from the database given an id.
-     * @param id [UUID] to fetch customer.
-     * @return [Customer] or null if not found.
-     */
-    fun find(id: UUID): Customer? {
-        logger.info("Retrieving customer with id: $id from database...")
-
-        return transaction {
-            val customer = CustomerTable
-                .selectAll()
-                .where { CustomerTable.id eq id }
-                .map { mapToModel(it) }
-                .firstOrNull()
-
-            logger.info("Found customer $customer in database")
-            customer
-        }
-    }
-
-    /**
-     * Map ResultRow to a Customer.
-     * @param row [ResultRow]
-     * @return [Customer]
-     */
-    private fun mapToModel(row: ResultRow): Customer {
-        return Customer(
-            id = row[CustomerTable.id].value,
-            mail = row[CustomerTable.mail],
-        )
-    }
-}
+interface CustomerRepo : JpaRepository<CustomerEntity, UUID>

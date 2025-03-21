@@ -11,8 +11,8 @@ dependencies {
     // Persistence subproject needs to know about the model subproject
     implementation(projects.model)
 
-    // JetBrains Exposed - Kotlin SQL library
-    implementation(local.exposed.springboot.starter)
+    // Spring Boot Data JPA dependency for interacting with the database
+    implementation(local.springboot.starter.jpa)
 }
 
 // Disabling bootJar and bootRun is necessary for a subproject/module
