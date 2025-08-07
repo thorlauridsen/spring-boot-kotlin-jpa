@@ -1,4 +1,4 @@
-rootProject.name = "sample"
+rootProject.name = "spring-boot-kotlin-jpa"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
