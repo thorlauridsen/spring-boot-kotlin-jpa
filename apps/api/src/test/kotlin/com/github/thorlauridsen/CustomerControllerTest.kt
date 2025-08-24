@@ -15,12 +15,17 @@ import org.springframework.test.web.servlet.MockMvc
 import java.util.UUID
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import org.springframework.context.annotation.Import
+import org.springframework.test.context.ActiveProfiles
 
 /**
  * Test class for testing the CustomerController.
  * This class extends the [BaseMockMvc] class so this will spin up a Spring Boot instance for the tests.
+ * A local Docker instance is required to run the tests as Testcontainers is used.
  * @param mockMvc The MockMvc instance to use for testing.
  */
+@ActiveProfiles("postgres")
+@Import(TestContainerConfig::class)
 class CustomerControllerTest(
     @Autowired mockMvc: MockMvc,
     @Autowired private val objectMapper: ObjectMapper
