@@ -1,6 +1,6 @@
 [versions]
 h2database = "2.4.240"
-jackson = "2.20.0"
+jackson = "2.20.1"
 junitPlatformLauncher = "1.12.2"
 kotlin = "2.2.21"
 liquibase = "5.0.1"
