@@ -5,36 +5,35 @@ plugins {
 }
 
 dependencies {
-	// The api subproject needs access to both the model and persistence subproject
-	implementation(projects.model)
-	implementation(projects.persistence)
+    // The api subproject needs access to both the model and persistence subproject
+    implementation(projects.model)
+    implementation(projects.persistence)
 
-	// Spring Boot dependencies
-	implementation(local.springboot.starter)
-	implementation(local.springboot.starter.validation)
-	implementation(local.springboot.starter.web)
+    // Spring Boot dependencies
+    implementation(local.springboot.starter)
+    implementation(local.springboot.starter.validation)
+    implementation(local.springboot.starter.webmvc)
 
-	// Springdoc for swagger docs supporting Spring Web MVC
-	implementation(local.springdoc.openapi.starter.webmvc)
+    // Spring Boot Liquibase dependency for database migrations
+    implementation(local.springboot.starter.liquibase)
 
-	// Liquibase for database migrations
-	runtimeOnly(local.liquibase.core)
+    // Springdoc for swagger docs supporting Spring Web MVC
+    implementation(local.springdoc.openapi.starter.webmvc)
 
-	// H2 in-memory database
-	runtimeOnly(local.h2database)
+    // H2 in-memory database
+    runtimeOnly(local.h2database)
 
-	// PostgreSQL database driver
-	runtimeOnly(local.postgres)
+    // PostgreSQL database driver
+    runtimeOnly(local.postgres)
 
-	// FasterXML Jackson kotlin module and support for Java 8 date/time
-	implementation(local.bundles.jackson)
-
-	// Test dependencies
-	testImplementation(local.springboot.starter.test)
-	testImplementation(local.springboot.testcontainers)
-	testImplementation(local.testcontainers.postgresql)
-	testImplementation(local.kotlin.test.junit5)
-	testRuntimeOnly(local.junit.platform.launcher)
+    // Test dependencies
+    testImplementation(local.springboot.resttestclient)
+    testImplementation(local.springboot.starter.test)
+    testImplementation(local.springboot.testcontainers)
+    testImplementation(local.testcontainers.junit.jupiter)
+    testImplementation(local.testcontainers.postgresql)
+    testImplementation(local.kotlin.test.junit5)
+    testRuntimeOnly(local.junit.platform.launcher)
 }
 
 tasks.test {
