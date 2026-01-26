@@ -10,6 +10,9 @@ dependencies {
 
     // Spring Boot Data JPA dependency for interacting with the database
     implementation(local.springboot.starter.jpa)
+
+    // Kotlin Reflection required by Spring Data JPA
+    implementation(local.kotlin.reflect)
 }
 
 // Disabling bootJar and bootRun is necessary for a subproject/module
